@@ -26,35 +26,63 @@ loader
 	.add("./images/treasureHunter.json")
 	.load(setup);
 
-let dungeon, explorer, treasure, door, id, blobs = [];
+let dungeon,
+	explorer,
+	treasure,
+	door,
+	id,
+	enemies = [],
+	borders = { x: 28, y: 10, width: 488, height: 480 };
+
+function CreateNewEntity(name, x, y){
+	let entity = new Sprite(id[name]);
+	entity.x = x;
+	entity.y = y;
+	entity.vx = 0;
+	entity.vy = 0;
+	app.stage.addChild(entity);
+
+	return entity;
+}
+function FillBlobs(numberOfEnemy, xOffset, spacing) { //разместить капли на игровом поле
+	let direction = 1;
+	let speed = 2;
+
+	for (let i = 0; i < numberOfEnemy; i++) {
+		let x = spacing * i + xOffset;
+		let y = randomInt(0, app.stage.height - 40);
+
+		let enemy = Enemy("blob.png", x, y, direction, speed);
+
+		direction *= -1;
+
+		enemies.push(enemy);
+	}	
+}
+
+function Enemy(name, x, y, direction, speed){
+	let result = {};
+
+	let sprite = CreateNewEntity(name, x, y);
+	sprite.vy = speed * direction;
+
+	result.moveVertical = function () {
+		sprite.y += sprite.vy;
+		let blobHitsWall = isCollidedWith(sprite, borders);
+
+		if (blobHitsWall === "top" || blobHitsWall === "bottom") {
+			sprite.vy *= -1;
+		}
+	};
+
+	result.moveHorizontal = function (){
+
+	};
+
+	return result;
+}
 
 function setup() {
-
-	function CreateNewEntity(name, x, y){
-		let entity = new Sprite(id[name]);
-		entity.x = x;
-		entity.y = y;
-		entity.vx = 0;
-		entity.vy = 0;
-		app.stage.addChild(entity);
-
-		return entity;
-	}
-	function FillBlobs(numberOfEnemy, xOffset, spacing) { //разместить капли на игровом поле
-		let direction = 1;
-		let speed = 2;
-	
-		for (let i = 0; i < numberOfEnemy; i++) {
-			let x = spacing * i + xOffset;
-			let y = randomInt(0, app.stage.height - 40);
-			let blob = CreateNewEntity("blob.png", x, y);
-	
-			blob.vy = speed * direction;
-			direction *= -1;
-
-			blobs.push(blob);
-		}	
-	}
 	id = resources["./images/treasureHunter.json"].textures;
 
 	dungeon = CreateNewEntity("dungeon.png", 0, 0);
@@ -77,14 +105,7 @@ function setup() {
 
 function play(delta) {
 	(function moveEnemy() {
-		blobs.forEach(function (blob) {
-			blob.y += blob.vy;
-			let blobHitsWall = isCollidedWith(blob, { x: 28, y: 10, width: 488, height: 480 });
-
-			if (blobHitsWall === "top" || blobHitsWall === "bottom") {
-				blob.vy *= -1;
-			}
-		});
+		enemies.forEach(function (enemy){enemy.moveVertical()});
 	})();
 
 
@@ -92,8 +113,6 @@ function play(delta) {
 		explorer.x += explorer.vx;
 		explorer.y += explorer.vy;
 	})();
-
-
 
 }
 function keyboardcontroller(entity){
