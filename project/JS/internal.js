@@ -39,13 +39,15 @@ function CreateNewEntity(name, x, y){
 	let entity = new Sprite(id[name]);
 	entity.x = x;
 	entity.y = y;
-	entity.vx = 0;
-	entity.vy = 0;
+	entity.step = 5;
+	entity.horizontalDirection = 0;
+	entity.verticalDirection = 0;
 	app.stage.addChild(entity);
 
 	return entity;
 }
-function FillBlobs(numberOfEnemy, xOffset, spacing) { //разместить капли на игровом поле
+function FillBlobs(numberOfEnemy, xOffset, spacing) {
+	//разместить капли на игровом поле
 	let direction = 1;
 	let speed = 2;
 
@@ -59,111 +61,6 @@ function FillBlobs(numberOfEnemy, xOffset, spacing) { //разместить к�
 
 		enemies.push(enemy);
 	}	
-}
-
-function Enemy(name, x, y, direction, speed){
-	let result = {};
-
-	let sprite = CreateNewEntity(name, x, y);
-	sprite.vy = speed * direction;
-
-	result.moveVertical = function () {
-		sprite.y += sprite.vy;
-		let blobHitsWall = isCollidedWith(sprite, borders);
-
-		if (blobHitsWall === "top" || blobHitsWall === "bottom") {
-			sprite.vy *= -1;
-		}
-	};
-
-	result.moveHorizontal = function (){
-
-	};
-
-	return result;
-}
-
-function setup() {
-	id = resources["./sprites/treasureHunter.json"].textures;
-
-	dungeon = CreateNewEntity("dungeon.png", 0, 0);
-
-	let treasureX = gameInfo.gameWidth - 255;
-	let treasureY = gameInfo.gameHeight/2 - 55;
-	treasure = CreateNewEntity("treasure.png", treasureX, treasureY);
-
-	door = CreateNewEntity("door.png", 32, 0);
-
-	FillBlobs(6, 150, 48);
-	
-	explorer = CreateNewEntity("explorer.png", 136, 136);
-	keyboardcontroller(explorer);
-
-	let gameTick = play;
-
-	app.ticker.add(delta => gameTick(delta));
-}
-
-function play(delta) {
-	(function moveEnemy() {
-		enemies.forEach(function (enemy){enemy.moveVertical()});
-	})();
-
-  (function moveExplorer() {
-    explorer.x += explorer.vx;
-    explorer.y += explorer.vy;
-  })();
-}
-
-function keyboardcontroller(entity) {
-  let left = keyboard(37),
-    up = keyboard(38),
-    right = keyboard(39),
-    down = keyboard(40);
-
-  left.press = () => {
-    entity.vx = -5;
-    entity.vy = 0;
-  };
-
-  left.release = () => {
-    if (!right.isDown && entity.vy === 0) {
-      entity.vx = 0;
-    }
-  };
-
-  up.press = () => {
-    entity.vy = -5;
-    entity.vx = 0;
-  };
-
-  up.release = () => {
-    if (!down.isDown && entity.vx === 0) {
-      entity.vy = 0;
-    }
-  };
-
-  right.press = () => {
-    entity.vx = 5;
-    entity.vy = 0;
-  };
-
-  right.release = () => {
-    if (!left.isDown && entity.vy === 0) {
-      entity.vx = 0;
-    }
-  };
-
-  down.press = () => {
-    entity.vy = 5;
-    entity.vx = 0;
-  };
-
-  down.release = () => {
-    if (!up.isDown && entity.vx === 0) {
-      entity.vy = 0;
-    }
-  };
 }
 
 function isCollidedWith(sprite, container) {
@@ -189,6 +86,84 @@ function isCollidedWith(sprite, container) {
     collision = "bottom";
   }
   return collision;
+}
+
+function setup() {
+	id = resources["./sprites/treasureHunter.json"].textures;
+
+	dungeon = CreateNewEntity("dungeon.png", 0, 0);
+
+	let treasureX = gameInfo.gameWidth - 255;
+	let treasureY = gameInfo.gameHeight/2 - 55;
+	treasure = CreateNewEntity("treasure.png", treasureX, treasureY);
+
+	door = CreateNewEntity("door.png", 32, 0);
+
+	FillBlobs(6, 150, 48);
+	
+	explorer = CreateNewEntity("explorer.png", 136, 136);
+	keyboardcontroller(explorer);
+
+	let gameTick = play;
+
+	app.ticker.add(delta => gameTick(delta));
+}
+
+function keyboardcontroller(entity) {
+  let left = keyboard(37),
+    up = keyboard(38),
+    right = keyboard(39),
+    down = keyboard(40);
+
+	let toLeft = -1;
+	let toRight = 1;
+	let toUp = -1;
+	let toDown = 1;
+	let stop = 0;
+
+  left.press = () => {
+    entity.horizontalDirection = toLeft;
+    entity.verticalDirection = stop;
+  };
+
+  left.release = () => {
+    if (!right.isDown && entity.verticalDirection === stop) {
+      entity.horizontalDirection = stop;
+    }
+  };
+
+  up.press = () => {
+    entity.verticalDirection = toUp;
+    entity.horizontalDirection = stop;
+  };
+
+  up.release = () => {
+    if (!down.isDown && entity.horizontalDirection === stop) {
+      entity.verticalDirection = stop;
+    }
+  };
+
+  right.press = () => {
+    entity.horizontalDirection = toRight;
+    entity.verticalDirection = stop;
+  };
+
+  right.release = () => {
+    if (!left.isDown && entity.verticalDirection === stop) {
+      entity.horizontalDirection = stop;
+    }
+  };
+
+  down.press = () => {
+    entity.verticalDirection = toDown;
+    entity.horizontalDirection = stop;
+  };
+
+  down.release = () => {
+    if (!up.isDown && entity.horizontalDirection === stop) {
+      entity.verticalDirection = stop;
+    }
+  };
 }
 
 function randomInt(min, max) {
