@@ -1,0 +1,47 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-size: 10px;
+  font-family: "Roboto", sans-serif;
+}
+
+.background {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+  background: url(../images/background_01.png) repeat;
+}
+
+.app {
+  display: flex;
+}
+
+.canvas {
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 300px;
+  margin-left: 2rem;
+  color: #fff;
+}
+
+.logo {
+  margin-bottom: 3rem;
+  font-size: 3rem;
+  text-align: center;
+}
+
+.score-bord {
+  width: 100%;
+  text-align: center;
+  font-size: 2rem;
+}
