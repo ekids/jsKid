@@ -1,3 +1,28 @@
+function Hero(name, x, y) {
+	let result = {};
+
+	let explorer = CreateNewEntity(name, x, y);
+	keyboardcontroller(explorer);
+
+	result.moveVertical = function () {
+		explorer.y += explorer.step * explorer.verticalDirection;
+	}
+
+	result.moveHorizontal = function () {
+		explorer.x += explorer.step * explorer.horizontalDirection;
+	}
+
+	result.findBox = function () {
+		let heroTouchBox = isCollidedWithObject(explorer, treasure);
+		if (heroTouchBox) {
+			return treasure;
+		}
+		return null;
+	}
+
+	return result;
+}
+
 function Enemy(name, x, y, direction, speed){
 	let result = {};
 	let reverse = -1;
@@ -29,8 +54,8 @@ function moveEnemy() {
 }
 
 function moveExplorer() {
-	explorer.x += explorer.step * explorer.horizontalDirection;
-	explorer.y += explorer.step * explorer.verticalDirection;
+	explorer.moveHorizontal();
+	explorer.moveVertical();
 }
 
 function play(delta) {

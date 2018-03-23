@@ -88,6 +88,16 @@ function isCollidedWith(sprite, container) {
   return collision;
 }
 
+function isCollidedWithObject(sprite, spriteObject) {
+	let spriteBounds = sprite.getBounds();
+	let objectBounds = spriteObject.getBounds();
+
+	return spriteBounds.x + spriteBounds.width > objectBounds.x
+		&& spriteBounds.x < objectBounds.x + objectBounds.width
+		&& spriteBounds.y + spriteBounds.height > objectBounds.y
+		&& spriteBounds.y < objectBounds.y + objectBounds.height;
+}
+
 function setup() {
 	id = resources["./sprites/treasureHunter.json"].textures;
 
@@ -100,9 +110,8 @@ function setup() {
 	door = CreateNewEntity("door.png", 32, 0);
 
 	FillBlobs(6, 150, 48);
-	
-	explorer = CreateNewEntity("explorer.png", 136, 136);
-	keyboardcontroller(explorer);
+
+	explorer = Hero("explorer.png", 136, 136);
 
 	let gameTick = play;
 
