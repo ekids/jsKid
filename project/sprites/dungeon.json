@@ -1,0 +1,42 @@
+{
+  "frames": {
+    "ek_wall_01.png": {
+      "frame": { "x": 0, "y": 0, "w": 50, "h": 50 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 50, "h": 50 },
+      "sourceSize": { "w": 50, "h": 50 }
+    },
+    "ek_treasure_01.png": {
+      "frame": { "x": 50, "y": 0, "w": 50, "h": 50 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 50, "h": 50 },
+      "sourceSize": { "w": 50, "h": 50 }
+    },
+    "ek_enemy_01.png": {
+      "frame": { "x": 100, "y": 0, "w": 50, "h": 50 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 50, "h": 50 },
+      "sourceSize": { "w": 50, "h": 50 }
+    },
+    "ek_canvas_02.png": {
+      "frame": { "x": 0, "y": 50, "w": 900, "h": 900 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 900, "h": 900 },
+      "sourceSize": { "w": 900, "h": 900 }
+    }
+  },
+  "meta": {
+    "app": "https://www.codeandweb.com/texturepacker",
+    "version": "1.0",
+    "image": "dungeon.png",
+    "format": "RGBA8888",
+    "size": { "w": 900, "h": 950 },
+    "scale": "1",
+    "smartupdate":
+      "$TexturePacker:SmartUpdate:4ae5802b8077df8c1dc62a21bace402c:cc6d64e599061d8c412aae6f1d7346a9:9c0fba27a8a0c106083a8713f6c67b32$"
+  }
+}

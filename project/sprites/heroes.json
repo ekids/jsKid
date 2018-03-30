@@ -1,74 +1,74 @@
 {
   "frames": {
-    "bowman_f_01.png": {
-      "frame": { "x": 0, "y": 0, "w": 30, "h": 30 },
+    "ek_hero_archer_f_01.png": {
+      "frame": { "x": 0, "y": 0, "w": 50, "h": 50 },
       "rotated": false,
       "trimmed": false,
-      "spriteSourceSize": { "x": 0, "y": 0, "w": 30, "h": 30 },
-      "sourceSize": { "w": 30, "h": 30 }
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 50, "h": 50 },
+      "sourceSize": { "w": 50, "h": 50 }
     },
-    "bowman_m_01.png": {
-      "frame": { "x": 30, "y": 0, "w": 30, "h": 30 },
+    "ek_hero_archer_m_01.png": {
+      "frame": { "x": 50, "y": 0, "w": 50, "h": 50 },
       "rotated": false,
       "trimmed": false,
-      "spriteSourceSize": { "x": 0, "y": 0, "w": 30, "h": 30 },
-      "sourceSize": { "w": 30, "h": 30 }
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 50, "h": 50 },
+      "sourceSize": { "w": 50, "h": 50 }
     },
-    "magician_f_01.png": {
-      "frame": { "x": 60, "y": 0, "w": 30, "h": 30 },
+    "ek_hero_mage_f_01.png": {
+      "frame": { "x": 100, "y": 0, "w": 50, "h": 50 },
       "rotated": false,
       "trimmed": false,
-      "spriteSourceSize": { "x": 0, "y": 0, "w": 30, "h": 30 },
-      "sourceSize": { "w": 30, "h": 30 }
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 50, "h": 50 },
+      "sourceSize": { "w": 50, "h": 50 }
     },
-    "magician_m_01.png": {
-      "frame": { "x": 90, "y": 0, "w": 30, "h": 30 },
+    "ek_hero_mage_m_01.png": {
+      "frame": { "x": 150, "y": 0, "w": 50, "h": 50 },
       "rotated": false,
       "trimmed": false,
-      "spriteSourceSize": { "x": 0, "y": 0, "w": 30, "h": 30 },
-      "sourceSize": { "w": 30, "h": 30 }
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 50, "h": 50 },
+      "sourceSize": { "w": 50, "h": 50 }
     },
-    "pirate_f_01.png": {
-      "frame": { "x": 120, "y": 0, "w": 30, "h": 30 },
+    "ek_hero_pirate_f_01.png": {
+      "frame": { "x": 200, "y": 0, "w": 50, "h": 50 },
       "rotated": false,
       "trimmed": false,
-      "spriteSourceSize": { "x": 0, "y": 0, "w": 30, "h": 30 },
-      "sourceSize": { "w": 30, "h": 30 }
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 50, "h": 50 },
+      "sourceSize": { "w": 50, "h": 50 }
     },
-    "pirate_m_01.png": {
-      "frame": { "x": 150, "y": 0, "w": 30, "h": 30 },
+    "ek_hero_pirate_m_01.png": {
+      "frame": { "x": 250, "y": 0, "w": 50, "h": 50 },
       "rotated": false,
       "trimmed": false,
-      "spriteSourceSize": { "x": 0, "y": 0, "w": 30, "h": 30 },
-      "sourceSize": { "w": 30, "h": 30 }
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 50, "h": 50 },
+      "sourceSize": { "w": 50, "h": 50 }
     },
-    "thief_f_01.png": {
-      "frame": { "x": 180, "y": 0, "w": 30, "h": 30 },
+    "ek_hero_rogue_f_01.png": {
+      "frame": { "x": 300, "y": 0, "w": 50, "h": 50 },
       "rotated": false,
       "trimmed": false,
-      "spriteSourceSize": { "x": 0, "y": 0, "w": 30, "h": 30 },
-      "sourceSize": { "w": 30, "h": 30 }
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 50, "h": 50 },
+      "sourceSize": { "w": 50, "h": 50 }
     },
-    "thief_m_01.png": {
-      "frame": { "x": 210, "y": 0, "w": 30, "h": 30 },
+    "ek_hero_rouge_m_01.png": {
+      "frame": { "x": 350, "y": 0, "w": 50, "h": 50 },
       "rotated": false,
       "trimmed": false,
-      "spriteSourceSize": { "x": 0, "y": 0, "w": 30, "h": 30 },
-      "sourceSize": { "w": 30, "h": 30 }
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 50, "h": 50 },
+      "sourceSize": { "w": 50, "h": 50 }
     },
-    "warrior_f_01.png": {
-      "frame": { "x": 240, "y": 0, "w": 30, "h": 30 },
+    "ek_hero_warrior_f_01.png": {
+      "frame": { "x": 400, "y": 0, "w": 50, "h": 50 },
       "rotated": false,
       "trimmed": false,
-      "spriteSourceSize": { "x": 0, "y": 0, "w": 30, "h": 30 },
-      "sourceSize": { "w": 30, "h": 30 }
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 50, "h": 50 },
+      "sourceSize": { "w": 50, "h": 50 }
     },
-    "warrior_m_01.png": {
-      "frame": { "x": 270, "y": 0, "w": 30, "h": 30 },
+    "ek_hero_warrior_m_01.png": {
+      "frame": { "x": 450, "y": 0, "w": 50, "h": 50 },
       "rotated": false,
       "trimmed": false,
-      "spriteSourceSize": { "x": 0, "y": 0, "w": 30, "h": 30 },
-      "sourceSize": { "w": 30, "h": 30 }
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 50, "h": 50 },
+      "sourceSize": { "w": 50, "h": 50 }
     }
   },
   "meta": {
@@ -76,9 +76,9 @@
     "version": "1.0",
     "image": "heroes.png",
     "format": "RGBA8888",
-    "size": { "w": 300, "h": 30 },
+    "size": { "w": 500, "h": 50 },
     "scale": "1",
     "smartupdate":
-      "$TexturePacker:SmartUpdate:91187da48a06a9dd9ea0f77a9fffecf0:867d068b18d27cf4d7b5158b7fee2149:fa6206f32e24e13194d38060eb015395$"
+      "$TexturePacker:SmartUpdate:a93e7ee4b7a805fdb5b75725d0458e26:2f850b9ce30a198c44f55578c57ac8e1:fa6206f32e24e13194d38060eb015395$"
   }
 }

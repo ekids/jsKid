@@ -23,44 +23,43 @@ let app = new PIXI.Application({
   resolution: 1
 });
 
-loader
-    .add("./sprites/treasureHunter.json")
-    .load(setup);
+loader.add("./sprites/treasureHunter.json").load(setup);
 
 let dungeon,
-	explorer,
-	treasure,
-	door,
-	id,
-	enemies = [],
-	borders = { x: 28, y: 10, width: 488, height: 480 };
+  explorer,
+  treasure,
+  door,
+  id,
+  enemies = [],
+  borders = { x: 28, y: 10, width: 488, height: 480 };
 
-function CreateNewEntity(name, x, y){
-	let entity = new Sprite(id[name]);
-	entity.x = x;
-	entity.y = y;
-	entity.step = 5;
-	entity.horizontalDirection = 0;
-	entity.verticalDirection = 0;
-	app.stage.addChild(entity);
+function CreateNewEntity(name, x, y) {
+  let entity = new Sprite(id[name]);
+  entity.x = x;
+  entity.y = y;
+  entity.step = 5;
+  entity.horizontalDirection = 0;
+  entity.verticalDirection = 0;
+  app.stage.addChild(entity);
 
-	return entity;
+  return entity;
 }
+
 function FillBlobs(numberOfEnemy, xOffset, spacing) {
-	//разместить капли на игровом поле
-	let direction = 1;
-	let speed = 2;
+  //разместить капли на игровом поле
+  let direction = 1;
+  let speed = 2;
 
-	for (let i = 0; i < numberOfEnemy; i++) {
-		let x = spacing * i + xOffset;
-		let y = randomInt(0, app.stage.height - 40);
+  for (let i = 0; i < numberOfEnemy; i++) {
+    let x = spacing * i + xOffset;
+    let y = randomInt(0, app.stage.height - 40);
 
-		let enemy = Enemy("blob.png", x, y, direction, speed);
+    let enemy = Enemy("blob.png", x, y, direction, speed);
 
-		direction *= -1;
+    direction *= -1;
 
-		enemies.push(enemy);
-	}	
+    enemies.push(enemy);
+  }
 }
 
 function isCollidedWith(sprite, container) {
@@ -89,33 +88,35 @@ function isCollidedWith(sprite, container) {
 }
 
 function isCollidedWithObject(sprite, spriteObject) {
-	let spriteBounds = sprite.getBounds();
-	let objectBounds = spriteObject.getBounds();
+  let spriteBounds = sprite.getBounds();
+  let objectBounds = spriteObject.getBounds();
 
-	return spriteBounds.x + spriteBounds.width > objectBounds.x
-		&& spriteBounds.x < objectBounds.x + objectBounds.width
-		&& spriteBounds.y + spriteBounds.height > objectBounds.y
-		&& spriteBounds.y < objectBounds.y + objectBounds.height;
+  return (
+    spriteBounds.x + spriteBounds.width > objectBounds.x &&
+    spriteBounds.x < objectBounds.x + objectBounds.width &&
+    spriteBounds.y + spriteBounds.height > objectBounds.y &&
+    spriteBounds.y < objectBounds.y + objectBounds.height
+  );
 }
 
 function setup() {
-	id = resources["./sprites/treasureHunter.json"].textures;
+  id = resources["./sprites/treasureHunter.json"].textures;
 
-	dungeon = CreateNewEntity("dungeon.png", 0, 0);
+  dungeon = CreateNewEntity("dungeon.png", 0, 0);
 
-	let treasureX = gameInfo.gameWidth - 255;
-	let treasureY = gameInfo.gameHeight/2 - 55;
-	treasure = CreateNewEntity("treasure.png", treasureX, treasureY);
+  let treasureX = gameInfo.gameWidth - 255;
+  let treasureY = gameInfo.gameHeight / 2 - 55;
+  treasure = CreateNewEntity("treasure.png", treasureX, treasureY);
 
-	door = CreateNewEntity("door.png", 32, 0);
+  door = CreateNewEntity("door.png", 32, 0);
 
-	FillBlobs(6, 150, 48);
+  FillBlobs(6, 150, 48);
 
-	explorer = Hero("explorer.png", 136, 136);
+  explorer = Hero("explorer.png", 136, 136);
 
-	let gameTick = play;
+  let gameTick = play;
 
-	app.ticker.add(delta => gameTick(delta));
+  app.ticker.add(delta => gameTick(delta));
 }
 
 function keyboardcontroller(entity) {
@@ -124,11 +125,11 @@ function keyboardcontroller(entity) {
     right = keyboard(39),
     down = keyboard(40);
 
-	let toLeft = -1;
-	let toRight = 1;
-	let toUp = -1;
-	let toDown = 1;
-	let stop = 0;
+  let toLeft = -1;
+  let toRight = 1;
+  let toUp = -1;
+  let toDown = 1;
+  let stop = 0;
 
   left.press = () => {
     entity.horizontalDirection = toLeft;
