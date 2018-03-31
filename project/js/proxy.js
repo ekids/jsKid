@@ -1,12 +1,13 @@
 let canvasSettings = {
-  width: 900,
-  height: 900,
-  cellSize: 50
+  sizeInPixels: 700,
+  squaresCount: 18
 };
 
+canvasSettings.cellSize = canvasSettings.sizeInPixels / canvasSettings.squaresCount;
+
 let app = new PIXI.Application({
-  width: canvasSettings.width,
-  height: canvasSettings.height,
+  width: canvasSettings.sizeInPixels,
+  height: canvasSettings.sizeInPixels,
   antialias: true,
   transparent: true,
   resolution: 1
@@ -25,25 +26,27 @@ function CreateEntity(texture, type, x, y) {
   let entity = new PIXI.Sprite(texture);
   entity.x = x;
   entity.y = y;
+  entity.scale.x = canvasSettings.scale;
+  entity.scale.y = canvasSettings.scale;
   entity.step = 2;
 
-  entity.spawn = function(cellY, cellX) {
-    if (cellX >= 0) {
-      this.x = cellX * canvasSettings.cellSize;
-      this.cellX = cellX;
+  entity.spawn = function(row, column) {
+    if (column >= 0) {
+      this.x = column * canvasSettings.cellSize;
+      this.column = column;
     } else {
       this.x = 0;
-      this.cellX = 0;
+      this.column = 0;
     }
-    if (cellY >= 0) {
-      this.y = cellY * canvasSettings.cellSize;
-      this.cellY = cellY;
+    if (row >= 0) {
+      this.y = row * canvasSettings.cellSize;
+      this.row = row;
     } else {
       this.y = 0;
-      this.cellY = 0;
+      this.row = 0;
     }
     if (type !== undefined) {
-      state.matrix[cellY][cellX] = {
+      state.matrix[row][column] = {
         object: this,
         type: type
       };
@@ -56,74 +59,74 @@ function CreateEntity(texture, type, x, y) {
   entity.moveLeft = function() {
     this.x -= this.step;
     if (!(this.x % canvasSettings.cellSize)) {
-      this.cellX = this.x / canvasSettings.cellSize;
+      this.column = this.x / canvasSettings.cellSize;
       this.prevDirection = "left";
-      state.matrix[this.cellY][this.cellX] = {
+      state.matrix[this.row][this.column] = {
         object: this,
         type: type
       };
-      state.matrix[this.cellY][this.cellX + 1] = null;
+      state.matrix[this.row][this.column + 1] = null;
     }
   };
 
   entity.moveRight = function() {
     this.x += this.step;
     if (!(this.x % canvasSettings.cellSize)) {
-      this.cellX = this.x / canvasSettings.cellSize;
+      this.column = this.x / canvasSettings.cellSize;
       this.prevDirection = "rigth";
-      state.matrix[this.cellY][this.cellX] = {
+      state.matrix[this.row][this.column] = {
         object: this,
         type: type
       };
-      state.matrix[this.cellY][this.cellX - 1] = null;
+      state.matrix[this.row][this.column - 1] = null;
     }
   };
 
   entity.moveUp = function() {
     this.y -= this.step;
     if (!(this.y % canvasSettings.cellSize)) {
-      this.cellY = this.y / canvasSettings.cellSize;
+      this.row = this.y / canvasSettings.cellSize;
       this.prevDirection = "up";
-      state.matrix[this.cellY][this.cellX] = {
+      state.matrix[this.row][this.column] = {
         object: this,
         type: type
       };
-      state.matrix[this.cellY + 1][this.cellX] = null;
+      state.matrix[this.row + 1][this.column] = null;
     }
   };
 
   entity.moveDown = function() {
     this.y += this.step;
     if (!(this.y % canvasSettings.cellSize)) {
-      this.cellY = this.y / canvasSettings.cellSize;
+      this.row = this.y / canvasSettings.cellSize;
       this.prevDirection = "down";
-      state.matrix[this.cellY][this.cellX] = {
+      state.matrix[this.row][this.column] = {
         object: this,
         type: type
       };
-      state.matrix[this.cellY - 1][this.cellX] = null;
+      state.matrix[this.row - 1][this.column] = null;
     }
   };
 
   // check surrounding cells
 
   entity.checkLeft = function() {
-    let cell = state.matrix[this.cellY][this.cellX - 1];
+    let cell = state.matrix[this.row][this.column - 1];
     return cell && cell.type;
   };
 
   entity.checkRight = function() {
-    let cell = state.matrix[this.cellY][this.cellX + 1];
+    let cell = state.matrix[this.row][this.column + 1];
     return cell && cell.type;
   };
 
   entity.checkUp = function() {
-    let cell = state.matrix[this.cellY - 1][this.cellX];
+    let cell = state.matrix[this.row - 1][this.column];
     return cell && cell.type;
   };
 
   entity.checkDown = function() {
-    let cell = state.matrix[this.cellY + 1][this.cellX];
+    let cell = state.matrix[this.row + 1][this.column];
     return cell && cell.type;
   };
 
@@ -150,13 +153,13 @@ function CreateMatrix() {
   let arr = [];
   for (
     let row = 0;
-    row < canvasSettings.height / canvasSettings.cellSize;
+    row < canvasSettings.squaresCount;
     row++
   ) {
     arr[row] = [];
     for (
       let col = 0;
-      col < canvasSettings.width / canvasSettings.cellSize;
+      col < canvasSettings.squaresCount;
       col++
     ) {
       arr[row][col] = null;
@@ -178,6 +181,9 @@ function init() {
   let canvas = new PIXI.Sprite(dungeonTextures["ek_canvas_02.png"]);
   canvas.x = 0;
   canvas.y = 0;
+  canvasSettings.scale = canvasSettings.sizeInPixels / canvas.width;
+  canvas.scale.x = canvasSettings.scale;
+  canvas.scale.y = canvasSettings.scale;
   app.stage.addChild(canvas);
 
   // add walls into matrix: into first and last rows
