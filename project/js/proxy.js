@@ -51,6 +51,8 @@ function CreateEntity(texture, type, x, y) {
         type: type
       };
     }
+	
+	entity.chooseDirection();
   };
 
   // matrix changes only when object arrives in next cell
@@ -58,54 +60,75 @@ function CreateEntity(texture, type, x, y) {
 
   entity.moveLeft = function() {
     this.x -= this.step;
-    if (!(this.x % canvasSettings.cellSize)) {
-      this.column = this.x / canvasSettings.cellSize;
-      this.prevDirection = "left";
+	let column = Math.ceil(this.x / canvasSettings.cellSize);
+    if (this.column !== column) {
+      this.column = column;
       state.matrix[this.row][this.column] = {
         object: this,
         type: type
       };
       state.matrix[this.row][this.column + 1] = null;
     }
+    this.direction = "left";
   };
 
   entity.moveRight = function() {
     this.x += this.step;
-    if (!(this.x % canvasSettings.cellSize)) {
-      this.column = this.x / canvasSettings.cellSize;
-      this.prevDirection = "rigth";
+	let column = Math.floor(this.x / canvasSettings.cellSize);
+    if (this.column !== column) {
+      this.column = column;
       state.matrix[this.row][this.column] = {
         object: this,
         type: type
       };
       state.matrix[this.row][this.column - 1] = null;
     }
+    this.direction = "right";
   };
 
   entity.moveUp = function() {
     this.y -= this.step;
-    if (!(this.y % canvasSettings.cellSize)) {
-      this.row = this.y / canvasSettings.cellSize;
-      this.prevDirection = "up";
+	let row = Math.ceil(this.y / canvasSettings.cellSize);
+    if (this.row !== row) {
+      this.row = row;
       state.matrix[this.row][this.column] = {
         object: this,
         type: type
       };
       state.matrix[this.row + 1][this.column] = null;
     }
+    this.direction = "up";
   };
 
   entity.moveDown = function() {
     this.y += this.step;
-    if (!(this.y % canvasSettings.cellSize)) {
-      this.row = this.y / canvasSettings.cellSize;
-      this.prevDirection = "down";
+    let row = Math.floor(this.y / canvasSettings.cellSize);
+    if (this.row !== row) {
+      this.row = row;
       state.matrix[this.row][this.column] = {
         object: this,
         type: type
       };
       state.matrix[this.row - 1][this.column] = null;
     }
+    this.direction = "down";
+  };
+  
+  entity.chooseDirection = function(){
+	let items = [];
+	if (hero.checkLeft() !== 'wall'){
+		items.push("left");
+	}
+	if (hero.checkRight() !== 'wall'){
+		items.push("right");
+	}
+	if (hero.checkDown() !== 'wall'){
+		items.push("down");
+	}
+	if (hero.checkUp() !== 'wall'){
+		items.push("up");
+	}
+    hero.direction = items[Math.floor(Math.random() * items.length)];
   };
 
   // check surrounding cells
