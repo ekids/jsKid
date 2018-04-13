@@ -42,7 +42,8 @@ function setup() {
 // все проверки и действия, написанные здесь, выполняются каждый фрейм (60 раз в секунду)
 function play(delta) {
   if (
-    JSON.stringify(hero.getPosition()) !== JSON.stringify({ row: 1, col: 5 })
+    // JSON.stringify(hero.getPosition()) !== JSON.stringify({ row: 1, col: 5 })
+    true
   ) {
     if (hero.checkDown() !== "wall" && hero.direction === "down") {
       hero.moveDown();

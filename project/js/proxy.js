@@ -129,6 +129,20 @@ function CreateEntity(texture, type, x, y) {
     if (hero.checkUp() !== "wall") {
       items.push("up");
     }
+
+    let prevDirection = hero.direction;
+    let directionMap = {
+      left: "right",
+      right: "left",
+      up: "down",
+      down: "up"
+    };
+
+    let counterDirectionIndex = items.indexOf(directionMap[prevDirection]);
+    if (items.length > 1 && counterDirectionIndex !== -1) {
+      items.splice(counterDirectionIndex, 1);
+    }
+
     hero.direction = items[Math.floor(Math.random() * items.length)];
   };
 
