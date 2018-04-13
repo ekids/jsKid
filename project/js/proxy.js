@@ -3,7 +3,8 @@ let canvasSettings = {
   squaresCount: 18
 };
 
-canvasSettings.cellSize = canvasSettings.sizeInPixels / canvasSettings.squaresCount;
+canvasSettings.cellSize =
+  canvasSettings.sizeInPixels / canvasSettings.squaresCount;
 
 let app = new PIXI.Application({
   width: canvasSettings.sizeInPixels,
@@ -51,8 +52,8 @@ function CreateEntity(texture, type, x, y) {
         type: type
       };
     }
-	
-	entity.chooseDirection();
+
+    entity.chooseDirection();
   };
 
   // matrix changes only when object arrives in next cell
@@ -60,7 +61,7 @@ function CreateEntity(texture, type, x, y) {
 
   entity.moveLeft = function() {
     this.x -= this.step;
-	let column = Math.ceil(this.x / canvasSettings.cellSize);
+    let column = Math.ceil(this.x / canvasSettings.cellSize);
     if (this.column !== column) {
       this.column = column;
       state.matrix[this.row][this.column] = {
@@ -74,7 +75,7 @@ function CreateEntity(texture, type, x, y) {
 
   entity.moveRight = function() {
     this.x += this.step;
-	let column = Math.floor(this.x / canvasSettings.cellSize);
+    let column = Math.floor(this.x / canvasSettings.cellSize);
     if (this.column !== column) {
       this.column = column;
       state.matrix[this.row][this.column] = {
@@ -88,7 +89,7 @@ function CreateEntity(texture, type, x, y) {
 
   entity.moveUp = function() {
     this.y -= this.step;
-	let row = Math.ceil(this.y / canvasSettings.cellSize);
+    let row = Math.ceil(this.y / canvasSettings.cellSize);
     if (this.row !== row) {
       this.row = row;
       state.matrix[this.row][this.column] = {
@@ -113,21 +114,21 @@ function CreateEntity(texture, type, x, y) {
     }
     this.direction = "down";
   };
-  
-  entity.chooseDirection = function(){
-	let items = [];
-	if (hero.checkLeft() !== 'wall'){
-		items.push("left");
-	}
-	if (hero.checkRight() !== 'wall'){
-		items.push("right");
-	}
-	if (hero.checkDown() !== 'wall'){
-		items.push("down");
-	}
-	if (hero.checkUp() !== 'wall'){
-		items.push("up");
-	}
+
+  entity.chooseDirection = function() {
+    let items = [];
+    if (hero.checkLeft() !== "wall") {
+      items.push("left");
+    }
+    if (hero.checkRight() !== "wall") {
+      items.push("right");
+    }
+    if (hero.checkDown() !== "wall") {
+      items.push("down");
+    }
+    if (hero.checkUp() !== "wall") {
+      items.push("up");
+    }
     hero.direction = items[Math.floor(Math.random() * items.length)];
   };
 
@@ -153,6 +154,18 @@ function CreateEntity(texture, type, x, y) {
     return cell && cell.type;
   };
 
+  entity.getPosition = function() {
+    // TODO: check only if int coords
+    for (let row = 0; row < state.matrix.length; row++) {
+      for (let col = 0; col < state.matrix.length; col++) {
+        let cell = state.matrix[row][col];
+        if (cell && cell.type === "hero") {
+          return { row, col };
+        }
+      }
+    }
+  };
+
   app.stage.addChild(entity);
 
   return entity;
@@ -174,17 +187,9 @@ function CreateElement(type) {
 
 function CreateMatrix() {
   let arr = [];
-  for (
-    let row = 0;
-    row < canvasSettings.squaresCount;
-    row++
-  ) {
+  for (let row = 0; row < canvasSettings.squaresCount; row++) {
     arr[row] = [];
-    for (
-      let col = 0;
-      col < canvasSettings.squaresCount;
-      col++
-    ) {
+    for (let col = 0; col < canvasSettings.squaresCount; col++) {
       arr[row][col] = null;
     }
   }
