@@ -115,6 +115,93 @@ function CreateEntity(texture, type, x, y) {
     this.direction = "down";
   };
 
+  // look directly through several cells
+
+  entity.lookHorizontal = function(direction) {
+    let predicate = item =>
+      item !== null &&
+      item.type &&
+      item.type !== "wall" &&
+      item.type !== "hero";
+
+    let rowArray = state.matrix[this.row];
+
+    let target = rowArray.find(predicate);
+    if (target === undefined) {
+      return null;
+    }
+
+    let targetCol = rowArray.findIndex(predicate);
+
+    let pathArray =
+      direction === "right"
+        ? rowArray.slice(this.col, targetCol - this.col)
+        : direction === "left"
+          ? rowArray.slice(targetCol, this.col - targetCol)
+          : rowArray;
+
+    let isClear = !pathArray.find(item => item.type === "wall");
+    if (isClear) {
+      return {
+        row: this.row,
+        col: targetCol,
+        type: target && target.type
+      };
+    }
+  };
+
+  entity.lookRight = function() {
+    return this.lookHorizontal("right");
+  };
+
+  entity.lookLeft = function() {
+    return this.lookHorizontal("left");
+  };
+
+  entity.lookVertical = function(direction) {
+    let predicate = item =>
+      item !== null &&
+      item.type &&
+      item.type !== "wall" &&
+      item.type !== "hero";
+
+    let columnArray = [];
+    for (let i = 0; i < state.matrix.length; i++) {
+      columnArray.push(state.matrix[i][this.col]);
+    }
+
+    let target = columnArray.find(predicate);
+    if (target === undefined) {
+      return null;
+    }
+
+    let targetRow = columnArray.findIndex(predicate);
+
+    let pathArray =
+      direction === "down"
+        ? columnArray.slice(this.row, targetRow - this.row)
+        : direction === "up"
+          ? columnArray.slice(targetRow, this.row - targetRow)
+          : columnArray;
+
+    let isClear = !pathArray.find(item => item.type === "wall");
+    if (isClear) {
+      return {
+        row: targetRow,
+        col: this.col,
+        type: target && target.type
+      };
+    }
+  };
+
+  entity.lookDown = function() {
+    return this.lookVertical("down");
+  };
+
+  entity.lookUp = function() {
+    return this.lookVertical("up");
+  };
+
   entity.chooseDirection = function() {
     let items = [];
     if (hero.checkLeft() !== "wall") {
